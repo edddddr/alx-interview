@@ -1,27 +1,25 @@
 #!/usr/bin/python3
-"""Module Making Change"""
+"""
+Module the find the fewest number of coins needed to meet a given amount total
+"""
 
 
 def makeChange(coins, total):
-    """Return: fewest number of coins needed
-    to meet total"""
-    if (type(total) is not int or type(coins) is not list):
-        return -1
-
+    """
+    Return: fewest number of coins needed
+    to meet total"
+    """
+    number = 0
+    count = 0
     if total <= 0:
         return 0
-
-    try:
-        Min = [float('inf') for i in range(total+1)]
-        Min[0] = 0
-        for i in range(1, total+1):
-            for j in range(len(coins)):
-                if Min[i - coins[j]] + 1 < Min[i]:
-                    Min[i] = Min[i - coins[j]] + 1
-
-        if Min[total] != float('inf'):
-            return Min[total]
-        else:
+    coins = sorted(coins, reverse=True)
+    for value in coins:
+        while (total >= number + value):
+            number += value
+            count += 1
+        if number == total:
+            return count
+        elif number > total:
             return -1
-    except Exception:
-        return -1
+    return -1
